@@ -14,7 +14,13 @@
 
 - create database (Mongodb)
 - use mongoose to deal with database
-- use validation on database
+- build user model
+
+## Day2 in project:
+
+- build post and comment model
+- use mongoose validation on database
+- use express-validations
 
 ## connect nodejs with mongodb
 
