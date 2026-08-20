@@ -25,13 +25,13 @@ export const getUserById = async (req, res, next) => {
 export const createUser = async (req, res, next) => {
   try {
     console.log(req.body);
-    const { name, email, password, role } = req.body;
+    const { name, email, password } = req.body;
     // create new user
     const user = await User.create({
       name,
       email,
       password,
-      role,
+      role: 'admin',
     });
     return res.status(201).json(user);
   } catch (err) {
@@ -41,21 +41,23 @@ export const createUser = async (req, res, next) => {
 export const updateUser = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { name, email, password, role } = req.body;
+    const { name, email } = req.body;
 
     const user = await User.findById(id);
     if (!user) next(new HTTPError(404, 'user not found'));
 
     user.name = name || user.name;
     user.email = email || user.email;
-    user.password = password || user.password;
-    user.role = role || user.role;
 
     await user.save();
     return res.status(200).json(user);
   } catch (err) {
     next(err);
   }
+};
+
+export const updatePassword = async (req, res, next) => {
+  const { oldPassword, newPassword } = req.body;
 };
 export const deleteUser = async (req, res, next) => {
   try {

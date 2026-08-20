@@ -35,13 +35,12 @@ export const getPostById = async (req, res, next) => {
 export const createPost = async (req, res, next) => {
   try {
     const { content, tags } = req.body;
-    //TODO: need to change where we get userId
-    const { user } = req.body;
+    const user = req.user;
 
     const post = await Post.create({
       content,
       tags,
-      user,
+      user: user._id,
     });
     return res.status(201).json(post);
   } catch (err) {

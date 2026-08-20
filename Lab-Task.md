@@ -16,6 +16,10 @@ Day 4 requirements:
 - link tasks with users
 - upgrade global error handling
 
+Day 5 requirements:
+
+- add authentication and authorization to project
+
 Task schema:
 
 - Field Type Purpose

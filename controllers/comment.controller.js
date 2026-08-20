@@ -23,7 +23,7 @@ export const createComment = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { content } = req.body;
-    const { user } = req.body;
+    const user = req.user;
 
     console.log('create comment');
     const post = await Post.findById(id);
@@ -31,7 +31,7 @@ export const createComment = async (req, res, next) => {
 
     post.comments.push({
       content,
-      user,
+      user: user._id,
     });
 
     await post.save();

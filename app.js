@@ -6,6 +6,7 @@ import globalErrorHandling from './middlewares/globalErrorHandling.js';
 
 import userRouter from './Routers/user.router.js';
 import postRouter from './Routers/post.router.js';
+import authRouter from './Routers/auth.router.js';
 const app = express();
 
 // set middlewares
@@ -13,6 +14,7 @@ app.use(morgan('dev'));
 app.use(express.json()); // req.body
 
 // set routes
+app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/posts', postRouter);
 

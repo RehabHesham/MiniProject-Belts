@@ -1,4 +1,5 @@
 // import mongoose from "mongoose";
+import bcrypt from 'bcryptjs';
 import { Schema, model } from 'mongoose';
 
 // create schema  =>  describe what properties in object (can contain some validation)
@@ -34,6 +35,24 @@ const userSchema = new Schema(
   { timestamps: true },
 );
 
+// you can make custom logic
+// this method will run before
+// User.create()  => user.create user obj.save() inside it
+// while updated  => we manually call obj.save()
+userSchema.pre('save', async function () {
+  // encryption password
+  // me must use function keyword to have this
+  // this will refer to user object being saved
+  //console.log('from pre save', this);
+
+  // console.log(this.isModified('password'));
+  if (this.isModified('password'))
+    this.password = await bcrypt.hash(this.password, 12);
+});
+
+userSchema.methods.comparePassword = async function (candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
 // use schema to create model
 // mongoose.model
 export default model('User', userSchema);
